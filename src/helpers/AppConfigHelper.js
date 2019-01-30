@@ -37,6 +37,21 @@ class AppConfigHelper {
 		}
 	}
 
+	checkAdminRole(req, res, next) {
+		try {
+			if (!req.user || !req.user.role || req.user.role != 'admin') {
+				throw new UnauthorizedError('User role not authorized');
+			}
+			next();
+		} catch (error) {
+			console.log(error);
+			const body = {
+				message: error.message
+			}
+			res.status(401).json(body);
+		}
+	}
+
 }
 
 module.exports = new AppConfigHelper();
