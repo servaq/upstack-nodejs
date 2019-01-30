@@ -18,7 +18,8 @@ before(async () => {
 	const dbConfig = { ...config.getConfig().database.connection };
 	const dbName = '`' + dbConfig.database + '`';
 	delete dbConfig.database;
-	let conn = mysql.createConnection(dbConfig);
+	const conn = mysql.createConnection(dbConfig);
+	await queryExec(conn, 'DROP DATABASE IF EXISTS ' + dbName);
 	const scripts = fs.readFileSync('./database/upstack-node.sql').toString().replace(new RegExp('`upstack-node`', 'g'), dbName).split(';');
 	scripts.forEach(async sql => {
 		if (sql.trim().length > 0) {
