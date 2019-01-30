@@ -1,9 +1,9 @@
-const AuthHelper = require('../helpers/AuthHelper');
+const AuthHelper = require('./AuthHelper');
 const DatabaseHelper = require('./DatabaseHelper');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const UserService = require('../services/UserService');
 
-class AppConfigHelper {
+class AppHelper {
 
 	async closeResources(req, res, next) {
 		res.on('finish', async () => {
@@ -54,4 +54,4 @@ class AppConfigHelper {
 
 }
 
-module.exports = new AppConfigHelper();
+module.exports = new AppHelper();
