@@ -1,0 +1,23 @@
+{
+	"name": "upstack-coding-challenge",
+	"version": "1.0.0",
+	"description": "UpStack coding challenge. REST API, register, email verification, login",
+	"main": "src/app.js",
+	"scripts": {
+		"test": "mocha --exit"
+	},
+	"author": "Sergio Vaquero",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.16.4",
+		"jsonwebtoken": "^8.4.0",
+		"knex": "^0.16.3",
+		"mysql": "^2.16.0",
+		"sha1": "^1.1.1"
+	},
+	"devDependencies": {
+		"chai": "^4.2.0",
+		"mocha": "^5.2.0",
+		"supertest": "^3.4.2"
+	}
+}
