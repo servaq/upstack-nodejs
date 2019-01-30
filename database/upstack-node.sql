@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS `upstack-node`;
+CREATE DATABASE `upstack-node` CHARACTER SET UTF8mb4 collate utf8mb4_general_ci;
+USE `upstack-node`;
+
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
