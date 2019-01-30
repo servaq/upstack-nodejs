@@ -2,12 +2,13 @@ const express = require('express');
 const UserController = require('./controllers/UserController');
 const AppConfigHelper = require('./helpers/AppConfigHelper');
 
-const port = process.env.POST || 3000;
+const port = process.env.PORT || 3000;
 
 const app = express();
+module.exports = app;
 
 app.use(express.json());
-app.use(AppConfigHelper.closeResources());
+app.use(AppConfigHelper.closeResources);
 
 app.route('/user')
 	.get((res, req) => UserController.getUsersList(req, res))
@@ -25,5 +26,3 @@ app.route('/user/:id')
 app.listen(port, () => {
 	console.log(`Server listening on port ${port}`);
 });
-
-module.exports = app;

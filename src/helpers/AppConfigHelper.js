@@ -5,14 +5,11 @@ const UserService = require('../services/UserService');
 
 class AppConfigHelper {
 
-	closeResources() {
-		const fn = (req, res, next) => {
-			next();
-			res.on('finish', async () => {
-				await DatabaseHelper.disconnect();
-			});
-		}
-		return fn;
+	async closeResources(req, res, next) {
+		res.on('finish', async () => {
+			await DatabaseHelper.disconnect();
+		});
+		next();
 	}
 
 	async checkAuth(req, res, next) {
