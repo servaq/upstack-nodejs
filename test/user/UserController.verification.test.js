@@ -16,7 +16,7 @@ describe('User verification tests', () => {
 	});
 
 	it('Invalid user id', (done) => {
-		request(app).get('/user/0/verify/a-token').expect(400, done);
+		request(app).get('/user/0/verify/a-token').expect(404, done);
 	});
 
 	it('Invalid token', (done) => {

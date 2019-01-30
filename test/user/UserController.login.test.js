@@ -21,7 +21,7 @@ describe('User login tests', () => {
 			username: user.username + 'a',
 			password: UserHelper.getUserPassword() + 'a',
 		}
-		request(app).post('/user/login').send(body).expect(401, done);
+		request(app).post('/user/login').send(body).expect(404, done);
 	});
 
 	it('Login should fails because invalid password', (done) => {
