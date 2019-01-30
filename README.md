@@ -53,3 +53,7 @@ docker-compose down
 - [Knex.js](http://knexjs.org)
 - [Mocha](https://mochajs.org/.js), [Chai](https://www.chaijs.com/), [Supertest](https://github.com/visionmedia/supertest)
 - [ESLint](https://eslint.org/)
+
+## Previous exercises
+
+There are the 2 exercises I did for UpStack, previously shared with gists, now available in: `/exercises`
