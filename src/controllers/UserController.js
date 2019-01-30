@@ -116,8 +116,17 @@ class UserController extends AbstractController {
 		}
 	}
 
-	deleteUser(req, res) {
-		// TODO
+	async deleteUser(req, res) {
+		try {
+			const user = await this._getParamUserAndValidateAuthorization(req, false);
+			if (req.user.id == user.id) {
+				throw new ForbiddenError('User cannot delete itself');
+			}
+			await UserService.deleteUser(user.id);
+			this.sendResponse(res, {}, 200);
+		} catch (error) {
+			this.sendResponseError(res, error);
+		}
 	}
 
 	async _validateUsernameAvailability(username) {
@@ -127,7 +136,7 @@ class UserController extends AbstractController {
 		}
 	}
 
-	async _getParamUserAndValidateAuthorization(req) {
+	async _getParamUserAndValidateAuthorization(req, onlyVerifiedUser = true) {
 		let user = req.user;
 		ValidationHelper.validateStringField(req.params, 'id');
 		if (user.role != 'admin' && user.id != req.params.id) {
@@ -139,7 +148,7 @@ class UserController extends AbstractController {
 				throw new NotFoundError('User does not exist');
 			}
 		}
-		if (user.verificationToken != null) {
+		if (onlyVerifiedUser && user.verificationToken != null) {
 			throw new ForbiddenError('User not verified');
 		}
 		return user;

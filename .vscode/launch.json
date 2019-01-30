@@ -17,7 +17,7 @@
 				"--colors",
 				"--exit",
 				"--recursive",
-				"${workspaceFolder}/test/user/UserController.getUser.test.js"
+				"${workspaceFolder}/test"
 			],
 			"internalConsoleOptions": "openOnSessionStart",
 			"env": {
