@@ -4,7 +4,9 @@
 	"description": "UpStack coding challenge. REST API, register, email verification, login",
 	"main": "src/app.js",
 	"scripts": {
-		"test": "mocha --exit"
+		"test": "NODE_ENV=test mocha --recursive --exit",
+		"lint": "./node_modules/.bin/eslint ./src/",
+		"start": "node ./src/app.js"
 	},
 	"author": "Sergio Vaquero",
 	"license": "ISC",
@@ -17,6 +19,7 @@
 	},
 	"devDependencies": {
 		"chai": "^4.2.0",
+		"eslint": "^5.12.1",
 		"mocha": "^5.2.0",
 		"supertest": "^3.4.2"
 	}

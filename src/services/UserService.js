@@ -16,15 +16,15 @@ class UserService {
 
 	async getUserForId(id) {
 		const result = await DatabaseHelper.getDb().table(TABLENAME)
-				.where('id', id)
-				.select();
+			.where('id', id)
+			.select();
 		return result.length == 1 ? result[0] : null;
 	}
 
 	async getUserForUsername(username) {
 		const result = await DatabaseHelper.getDb().table(TABLENAME)
-				.where('username', username)
-				.select();
+			.where('username', username)
+			.select();
 		return result.length == 1 ? result[0] : null;
 	}
 
@@ -44,8 +44,8 @@ class UserService {
 
 	async deleteUser(userId) {
 		await DatabaseHelper.getDb().table(TABLENAME)
-				.where('id', userId)
-				.del();
+			.where('id', userId)
+			.del();
 	}
 
 }

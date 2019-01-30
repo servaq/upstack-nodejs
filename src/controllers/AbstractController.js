@@ -1,7 +1,3 @@
-const BadRequestError = require('../errors/BadRequestError');
-const UnauthorizedError = require('../errors/UnauthorizedError');
-const ForbiddenError = require('../errors/ForbiddenError');
-
 class AbstractController {
 
 	sendResponse(response, body, statusCode) {
@@ -17,7 +13,7 @@ class AbstractController {
 		} else {
 			body.message = 'Internal error';
 		}
-		this.sendResponse(response, body, statusCode || 500);
+		this.sendResponse(response, body, statusCode || 500);
 	}
 
 }
