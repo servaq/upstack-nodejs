@@ -1,10 +1,10 @@
 {
-	"name": "upstack-coding-challenge",
+	"name": "upstack-coding-challenge-nodejs",
 	"version": "1.0.0",
-	"description": "UpStack coding challenge. REST API, register, email verification, login",
+	"description": "UpStack coding challenge Node.js. REST API, register, email verification, login",
 	"main": "src/app.js",
 	"scripts": {
-		"test": "NODE_ENV=test mocha --recursive --exit",
+		"test": "NODE_ENV=test PORT=3001 mocha --recursive --exit",
 		"lint": "./node_modules/.bin/eslint ./src/",
 		"start": "node ./src/app.js"
 	},

@@ -7,7 +7,7 @@ const configs = {
 		database: {
 			client: 'mysql',
 			connection: {
-				host: 'localhost',
+				host: 'database',
 				user: 'root',
 				password: 'root',
 				database: 'upstack-node',
@@ -23,7 +23,7 @@ const configs = {
 		database: {
 			client: 'mysql',
 			connection: {
-				host: 'localhost',
+				host: 'database',
 				user: 'root',
 				password: 'root',
 				database: 'upstack-node-test',
