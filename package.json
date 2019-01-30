@@ -1,7 +1,7 @@
 {
 	"name": "upstack-coding-challenge-nodejs",
 	"version": "1.0.0",
-	"description": "UpStack coding challenge Node.js. REST API, register, email verification, login",
+	"description": "Upstack coding challenge Node.js. REST API, register, email verification, login",
 	"main": "src/app.js",
 	"scripts": {
 		"test": "NODE_ENV=test PORT=3001 mocha --recursive --exit",

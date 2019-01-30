@@ -1,4 +1,4 @@
-# UpStack - Coding challenge Node.js
+# Upstack - Coding challenge Node.js
 
 _Author: Sergio Vaquero_
 
@@ -31,7 +31,7 @@ docker exec -it upstack-nodejs_server_1 npm test
 
 ## Play with Postman
 
-Collection: `/api/UpStack nodejs.postman_collection.json`
+Collection: `/api/upstack nodejs.postman_collection.json`
 
 Ports:
 
@@ -56,4 +56,4 @@ docker-compose down
 
 ## Previous exercises
 
-There are the 2 exercises I did for UpStack, previously shared with gists, now available in: `/exercises`
+There are the 2 exercises I did for Upstack, previously shared with gists, now available in: `/exercises`
