@@ -1,0 +1,413 @@
+{
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations about user"
+    }
+  ],
+  "paths": {
+    "/user": {
+      "get": {
+        "operationId": "listUsers",
+        "summary": "List all verified users.",
+        "description": "Only for \"admin\" role.",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of verified users",
+            "schema": {
+              "x-oad-type": "array",
+              "type": "array",
+              "title": "Users",
+              "items": {
+                "x-oad-type": "reference",
+                "$ref": "#/definitions/User"
+              }
+            },
+            "x-oad-type": "response"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createUser",
+        "summary": "Creates a user",
+        "description": "Creates a user pending of email verification.",
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/User"
+            },
+            "x-oad-type": "response"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "User object",
+            "required": true,
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/User"
+            },
+            "x-oad-type": "parameter"
+          }
+        ]
+      },
+      "x-oad-type": "operation"
+    },
+    "/user/{id}/verify/{token}": {
+      "get": {
+        "operationId": "verifyUser",
+        "summary": "Verify user email",
+        "description": "If the token is valid for the user, mark the user as verified.",
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Empty"
+            },
+            "x-oad-type": "response"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "x-oad-type": "parameter"
+          },
+          {
+            "name": "token",
+            "in": "path",
+            "description": "User verification token",
+            "required": true,
+            "type": "string",
+            "x-oad-type": "parameter"
+          }
+        ]
+      },
+      "x-oad-type": "operation"
+    },
+    "/user/login": {
+      "post": {
+        "operationId": "loginUser",
+        "summary": "Logs user into the system",
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "201": {
+            "description": "User login OK",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/User"
+            },
+            "x-oad-type": "response"
+          },
+          "400": {
+            "description": "Invalid username/password supplied",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          }
+        }
+      },
+      "x-oad-type": "operation"
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "getUser",
+        "summary": "Get a user by id.",
+        "description": "\"admin\" role can request every user id. \"user\" role only can request user id of his/her user.",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/User"
+            },
+            "x-oad-type": "response"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-oad-type": "parameter"
+          }
+        ]
+      },
+      "put": {
+        "operationId": "updateUser",
+        "summary": "Updates a user",
+        "description": "\"admin\" role can request every user id. \"user\" role only can request user id of his/her user.",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/User"
+            },
+            "x-oad-type": "response"
+          },
+          "400": {
+            "description": "Invalid user supplied",
+            "x-oad-type": "response"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          },
+          "404": {
+            "description": "User not found",
+            "x-oad-type": "response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of User that need to be updated",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-oad-type": "parameter"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/User"
+            },
+            "x-oad-type": "parameter"
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteUser",
+        "summary": "Deletes a user",
+        "description": "Only for \"admin\" role.",
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "tags": [
+          "user"
+        ],
+        "responses": {
+          "200": {
+            "description": "Deletes a user",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Empty"
+            },
+            "x-oad-type": "response"
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "x-oad-type": "response"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "x-oad-type": "reference",
+              "$ref": "#/definitions/Error"
+            },
+            "x-oad-type": "response"
+          },
+          "404": {
+            "description": "User not found",
+            "x-oad-type": "response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of user that needs to be deleted",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-oad-type": "parameter"
+          }
+        ]
+      },
+      "x-oad-type": "operation"
+    }
+  },
+  "definitions": {
+    "User": {
+      "x-oad-type": "object",
+      "type": "object",
+      "title": "User object",
+      "properties": {
+        "id": {
+          "x-oad-type": "integer",
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "x-oad-type": "string",
+          "type": "string"
+        },
+        "firstName": {
+          "x-oad-type": "string",
+          "type": "string"
+        },
+        "lastName": {
+          "x-oad-type": "string",
+          "type": "string"
+        },
+        "email": {
+          "x-oad-type": "string",
+          "type": "string"
+        },
+        "password": {
+          "x-oad-type": "string",
+          "type": "string"
+        },
+        "role": {
+          "x-oad-type": "string",
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "x-oad-type": "object",
+      "type": "object",
+      "title": "Error object",
+      "properties": {
+        "message": {
+          "x-oad-type": "string",
+          "type": "string"
+        }
+      }
+    },
+    "Empty": {
+      "x-oad-type": "object",
+      "type": "object",
+      "title": "Empty object"
+    }
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "name": "Authorization",
+      "in": "header",
+      "type": "apiKey"
+    }
+  },
+  "info": {
+    "title": "UpStack base backend service",
+    "version": "1.0.0",
+    "description": "UpStack coding challenge",
+    "contact": {
+      "name": "Sergio",
+      "email": "servaq@gmail.com"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0"
+}
