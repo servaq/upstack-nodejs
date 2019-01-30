@@ -1,4 +1,25 @@
 {
+  "info": {
+    "title": "UpStack Node.js backend service",
+    "version": "1.0.0",
+    "description": "UpStack coding challenge",
+    "contact": {
+      "name": "Sergio",
+      "email": "servaq@gmail.com"
+    }
+  },
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
   "tags": [
     {
       "name": "user",
@@ -274,7 +295,7 @@
       "delete": {
         "operationId": "deleteUser",
         "summary": "Deletes a user",
-        "description": "Only for \"admin\" role.",
+        "description": "Only for \"admin\" role. Nobody can delete itself.",
         "security": [
           {
             "JWT": []
@@ -384,30 +405,5 @@
       "in": "header",
       "type": "apiKey"
     }
-  },
-  "info": {
-    "title": "UpStack base backend service",
-    "version": "1.0.0",
-    "description": "UpStack coding challenge",
-    "contact": {
-      "name": "Sergio",
-      "email": "servaq@gmail.com"
-    }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
-  },
-  "basePath": "/",
-  "schemes": [
-    "http",
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
-  "swagger": "2.0"
+  }
 }
