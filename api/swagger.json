@@ -88,7 +88,7 @@
       "get": {
         "operationId": "verifyUser",
         "summary": "Verify user email",
-        "description": "If the token is valid for the user, mark the user as verified.",
+        "description": "If the token is valid for the user, mark the user as verified. It is with GET method because it is usually called with a link.",
         "tags": [
           "user"
         ],
