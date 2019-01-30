@@ -19,7 +19,6 @@ describe('Get user by id test', () => {
 
 	after(async () => {
 		await UserHelper.deleteUser(admin);
-		await UserHelper.deleteUser(user);
 	});
 
 	it('Without token should fails', (done) => {
@@ -72,6 +71,14 @@ describe('Get user by id test', () => {
 				});
 			})
 			.end(done);
+	});
+
+	it('Deletes user', async () => {
+		await UserHelper.deleteUser(user);
+	});
+
+	it('Should fails because user was deleted', (done) => {
+		request(app).get('/user/' + user.id).set('Authorization', 'Bearer ' + adminToken).expect(404, done);
 	});
 
 });

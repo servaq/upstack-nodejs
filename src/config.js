@@ -10,7 +10,7 @@ const configs = {
 				host: 'localhost',
 				user: 'root',
 				password: 'root',
-				database: 'upstack-node-dev',
+				database: 'upstack-node',
 				charset: 'utf8',
 			}
 		}
