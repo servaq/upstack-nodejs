@@ -12,10 +12,6 @@ describe('User login tests', () => {
 		user = await UserHelper.createUser();
 	});
 
-	after(async () => {
-		await UserHelper.deleteUser(user);
-	});
-
 	it('Login should fails because invalid username', (done) => {
 		const body = {
 			username: user.username + 'a',
@@ -59,6 +55,14 @@ describe('User login tests', () => {
 
 	it('Provided token should works', (done) => {
 		request(app).get('/user/' + user.id).set('Authorization', 'Bearer ' + token).expect(200, done);
+	});
+
+	it('Deletes user', async () => {
+		await UserHelper.deleteUser(user);
+	});
+
+	it('Provided token should fails because user is deleted', (done) => {
+		request(app).get('/user/' + user.id).set('Authorization', 'Bearer ' + token).expect(401, done);
 	});
 
 });
