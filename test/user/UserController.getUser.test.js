@@ -22,6 +22,10 @@ describe('Get user by id test', () => {
 		await UserHelper.deleteUser(user);
 	});
 
+	it('Without token should fails', (done) => {
+		request(app).get('/user/0').expect(401, done);
+	});
+
 	it('With invalid token should fails', (done) => {
 		request(app).get('/user/0').set('Authorization', 'Bearer invalid.token').expect(401, done);
 	});

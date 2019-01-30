@@ -10,7 +10,23 @@ const configs = {
 				host: 'localhost',
 				user: 'root',
 				password: 'root',
-				database: 'upstack-node',
+				database: 'upstack-node-dev',
+				charset: 'utf8',
+			}
+		}
+	},
+	test: {
+		token: {
+			secret: 'MuNrGr2QNf4XBjk8LG8X6fBB',
+			ttlSeconds: 30000,
+		},
+		database: {
+			client: 'mysql',
+			connection: {
+				host: 'localhost',
+				user: 'root',
+				password: 'root',
+				database: 'upstack-node-test',
 				charset: 'utf8',
 			}
 		}

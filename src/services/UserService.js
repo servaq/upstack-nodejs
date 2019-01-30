@@ -4,6 +4,16 @@ const TABLENAME = 'users';
 
 class UserService {
 
+	async getAllUsers(verified = true) {
+		let query = DatabaseHelper.getDb().table(TABLENAME);
+		if (verified === true) {
+			query = query.whereNull('verificationToken');
+		} else if (verified === false) {
+			query = query.whereNotNull('verificationToken');
+		}
+		return await query.select();
+	}
+
 	async getUserForId(id) {
 		const result = await DatabaseHelper.getDb().table(TABLENAME)
 				.where('id', id)

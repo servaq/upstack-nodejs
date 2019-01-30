@@ -57,8 +57,14 @@ class UserController extends AbstractController {
 		}
 	}
 
-	getUsersList(req, res) {
-		// TODO
+	async getUsersList(req, res) {
+		try {
+			const usersList = await UserService.getAllUsers(true);
+			usersList.forEach(user => user = this._cleanUserSensitiveData(user));
+			this.sendResponse(res, usersList, 200);
+		} catch (error) {
+			this.sendResponseError(res, error);
+		}
 	}
 
 	async getUser(req, res) {

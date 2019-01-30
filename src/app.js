@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(AppHelper.closeResources);
 
 app.route('/user')
-	.get(AppHelper.checkAuth, AppHelper.checkAdminRole, (res, req) => UserController.getUsersList(req, res))
+	.get(AppHelper.checkAuth, AppHelper.checkAdminRole, (req, res) => UserController.getUsersList(req, res))
 	.post((req, res) => UserController.createUser(req, res));
 
 app.get('/user/:id/verify/:token', (req, res) => UserController.verifyUser(req, res));

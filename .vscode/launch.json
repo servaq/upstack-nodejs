@@ -15,11 +15,14 @@
 				"--timeout",
 				"999999",
 				"--colors",
-				"${workspaceFolder}/test",
 				"--exit",
-				"--recursive"
+				"--recursive",
+				"${workspaceFolder}/test/user/UserController.getUsersList.test.js"
 			],
-			"internalConsoleOptions": "openOnSessionStart"
+			"internalConsoleOptions": "openOnSessionStart",
+			"env": {
+				"NODE_ENV": "test"
+			}
 		},
 		{
 			"type": "node",
