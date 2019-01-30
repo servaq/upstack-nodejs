@@ -69,17 +69,7 @@ class UserController extends AbstractController {
 
 	async getUser(req, res) {
 		try {
-			let user = req.user;
-			ValidationHelper.validateStringField(req.params, 'id');
-			if (user.role != 'admin' && user.id != req.params.id) {
-				throw new ForbiddenError('User role not allowed');
-			}
-			if (user.id != req.params.id) {
-				user = await UserService.getUserForId(req.params.id);
-				if (user == null) {
-					throw new NotFoundError('User does not exist');
-				}
-			}
+			const user = await this._getParamUserAndValidateAuthorization(req);
 			this.sendResponse(res, this._cleanUserSensitiveData(user), 200);
 		} catch (error) {
 			this.sendResponseError(res, error);
@@ -89,11 +79,8 @@ class UserController extends AbstractController {
 	async createUser(req, res) {
 		try {
 			this._validateUserData(req.body);
-			let user = await UserService.getUserForUsername(req.body.username);
-			if (user != null) {
-				throw new BadRequestError('Username not available');
-			}
-			user = req.body;
+			await this._validateUsernameAvailability(req.body.username);
+			let user = req.body;
 			user.password = this._hashPassword(user.password);
 			user.verificationToken = sha1(Math.random().toString());
 			user = await UserService.saveUser(user);
@@ -103,23 +90,72 @@ class UserController extends AbstractController {
 		}
 	}
 
-	updateUser(req, res) {
-		// TODO
+	async updateUser(req, res) {
+		try {
+			let user = await this._getParamUserAndValidateAuthorization(req);
+			const changePassword = req.body.password && true || false;
+			this._validateUserData(req.body, changePassword);
+			if (user.role != req.body.role && user.role == 'user' && req.user.role != 'admin') {
+				throw new ForbiddenError('User role not allowed');
+			}
+			if (user.username != req.body.username) {
+				await this._validateUsernameAvailability(req.body.username);
+				user.username = req.body.username;
+			}
+			user.firstName = req.body.firstName;
+			user.lastName = req.body.lastName;
+			user.email = req.body.email;
+			user.role = req.body.role;
+			if (changePassword) {
+				user.password = this._hashPassword(req.body.password);
+			}
+			user = await UserService.saveUser(user);
+			this.sendResponse(res, this._cleanUserSensitiveData(user), 200);
+		} catch (error) {
+			this.sendResponseError(res, error);
+		}
 	}
 
 	deleteUser(req, res) {
 		// TODO
 	}
 
-	_validateUserData(user) {
+	async _validateUsernameAvailability(username) {
+		const user = await UserService.getUserForUsername(username);
+		if (user != null) {
+			throw new BadRequestError('Username not available');
+		}
+	}
+
+	async _getParamUserAndValidateAuthorization(req) {
+		let user = req.user;
+		ValidationHelper.validateStringField(req.params, 'id');
+		if (user.role != 'admin' && user.id != req.params.id) {
+			throw new ForbiddenError('User role not allowed');
+		}
+		if (user.id != req.params.id) {
+			user = await UserService.getUserForId(req.params.id);
+			if (user == null) {
+				throw new NotFoundError('User does not exist');
+			}
+		}
+		if (user.verificationToken != null) {
+			throw new ForbiddenError('User not verified');
+		}
+		return user;
+	}
+
+	_validateUserData(user, validatePassword = true) {
 		ValidationHelper.validateStringField(user, 'username');
 		ValidationHelper.validateStringField(user, 'firstName');
 		ValidationHelper.validateStringField(user, 'lastName');
 		ValidationHelper.validateStringField(user, 'email');
-		ValidationHelper.validateStringField(user, 'password');
 		ValidationHelper.validateStringField(user, 'role');
 		if (!roles.includes(user.role)) {
 			throw new BadRequestError('Invalid role, must be: ' + roles.join(', '));
+		}
+		if (validatePassword) {
+			ValidationHelper.validateStringField(user, 'password');
 		}
 	}
 

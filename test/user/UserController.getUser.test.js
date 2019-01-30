@@ -33,40 +33,40 @@ describe('Get user by id test', () => {
 		request(app).get('/user/0').set('Authorization', 'Bearer ' + adminToken).expect(404, done);
 	});
 
-	it('With my user id should be OK for admin role', (done) => {
+	it('With my user id should be OK for "admin" role', (done) => {
 		request(app).get('/user/' + admin.id).set('Authorization', 'Bearer ' + adminToken).expect(200)
 			.expect(response => {
 				Object.keys(admin).forEach(key => {
 					if (key != 'password' && key != 'verificationToken') {
-						expect(admin[key]).to.be.equals(response.body[key]);
+						expect(admin[key], key).to.be.equals(response.body[key]);
 					}
 				});
 			})
 			.end(done);
 	});
 
-	it('With my user id should be OK for user role', (done) => {
+	it('With my user id should be OK for "user" role', (done) => {
 		request(app).get('/user/' + user.id).set('Authorization', 'Bearer ' + userToken).expect(200)
 			.expect(response => {
 				Object.keys(user).forEach(key => {
 					if (key != 'password' && key != 'verificationToken') {
-						expect(user[key]).to.be.equals(response.body[key]);
+						expect(user[key], key).to.be.equals(response.body[key]);
 					}
 				});
 			})
 			.end(done);
 	});
 
-	it('With admin id should fails for user role', (done) => {
+	it('With admin id should fails for "user" role', (done) => {
 		request(app).get('/user/' + admin.id).set('Authorization', 'Bearer ' + userToken).expect(403, done);
 	});
 
-	it('With user id should be OK for admin role', (done) => {
+	it('With user id should be OK for "admin" role', (done) => {
 		request(app).get('/user/' + user.id).set('Authorization', 'Bearer ' + adminToken).expect(200)
 			.expect(response => {
 				Object.keys(user).forEach(key => {
 					if (key != 'password' && key != 'verificationToken') {
-						expect(user[key]).to.be.equals(response.body[key]);
+						expect(user[key], key).to.be.equals(response.body[key]);
 					}
 				});
 			})

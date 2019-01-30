@@ -47,7 +47,7 @@ describe('User login tests', () => {
 		}
 		request(app).post('/user/login').send(body).expect(201)
 			.expect(response => {
-				expect(response.body.token).to.be.a('string');
+				expect(response.body.token, 'token').to.be.a('string');
 				token = response.body.token;
 			})
 			.end(done);

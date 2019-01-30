@@ -92,11 +92,11 @@ describe('User creation tests', () => {
 		}
 		request(app).post('/user').send(body).expect(201)
 			.expect(response => {
-				expect(response.body.id).to.be.a('number');
+				expect(response.body.id, 'id').to.be.a('number');
 				userId = response.body.id;
 				Object.keys(body).forEach(key => {
 					if (key != 'password') {
-						expect(body[key]).to.be.equals(response.body[key]);
+						expect(body[key], key).to.be.equals(response.body[key]);
 					}
 				});
 			})

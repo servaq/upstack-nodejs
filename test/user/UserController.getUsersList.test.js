@@ -40,7 +40,7 @@ describe('Get user by id test', () => {
 			.end(done);
 	});
 
-	it('Creates an user with user role', async () => {
+	it('Creates an user with "user" role', async () => {
 		user = await UserHelper.createUser('johndoe2', 'user');
 	});
 
@@ -65,7 +65,7 @@ describe('Get user by id test', () => {
 			.end(done);
 	});
 
-	it('Should fails with user role token', (done) => {
+	it('Should fails with "user" role token', (done) => {
 		request(app).get('/user').set('Authorization', 'Bearer ' + userToken).expect(401, done);
 	});
 
