@@ -9,14 +9,14 @@ class UserHelper {
 		return "doe";
 	}
 
-	async createUser() {
+	async createUser(username = 'johndoe', role = 'admin') {
 		const body = {
-			username: "johndoe",
+			username: username,
 			firstName: "John",
 			lastName: "Doe",
 			email: "john",
 			password: this.getUserPassword(),
-			role: "admin"
+			role: role
 		}
 		const response = await request(app).post('/user').send(body).expect(201);
 		await DatabaseHelper.disconnect();
@@ -30,9 +30,9 @@ class UserHelper {
 		return user;
 	}
 
-	async createVerifiedUser() {
-		const user = this.createUser();
-		return this.verifyUser(user);
+	async createVerifiedUser(username, role) {
+		const user = await this.createUser(username, role);
+		return await this.verifyUser(user);
 	}
 
 	async deleteUser(user) {
@@ -40,6 +40,16 @@ class UserHelper {
 			await UserService.deleteUser(user.id);
 		}
 		await DatabaseHelper.disconnect();
+	}
+
+	async getAuthToken(user) {
+		const body = {
+			username: user.username,
+			password: this.getUserPassword(),
+		}
+		const response = await request(app).post('/user/login').send(body).expect(201);
+		await DatabaseHelper.disconnect();
+		return response.body.token;
 	}
 
 }
