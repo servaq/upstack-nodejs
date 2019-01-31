@@ -26,7 +26,7 @@ docker-compose up -d
 ## Run the tests
 
 ```
-docker exec -it upstack-nodejs_server_1 npm test
+docker exec -it upstack-nodejs_server_1 npm run coverage
 ```
 
 ## Play with Postman
@@ -52,6 +52,7 @@ docker-compose down
 - [Express](https://expressjs.com/)
 - [Knex.js](http://knexjs.org)
 - [Mocha](https://mochajs.org/.js), [Chai](https://www.chaijs.com/), [Supertest](https://github.com/visionmedia/supertest)
+- [Istanbul](http://istanbul.js.org/)
 - [ESLint](https://eslint.org/)
 
 ## Previous exercises
